@@ -1,7 +1,3 @@
-using Infrastructure.Data.DataBaseContext;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Infrastructure.Data.Extensions;
 
 // метод расширения с логикой получения зарегистрированных сервисов

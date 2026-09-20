@@ -1,6 +1,3 @@
-using Domain.Models;
-using Microsoft.EntityFrameworkCore;
-
 namespace Application.Data.DataBaseContext;
 
 // абстракция для работы с БД (Use Cases)

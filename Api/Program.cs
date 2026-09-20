@@ -1,34 +1,18 @@
-using Infrastructure.Data.DataBaseContext;
-using Infrastructure.Data.Extensions;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-
-builder.Services.AddOpenApi();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString(
-        "SQLiteConnection"
-    ));
-});
+builder.Services
+    .AddApiServices()
+    .AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) // в проде быть не должно
 {
-    app.MapOpenApi();
-    await app.InitializeDatabaseAsync();
+    await app.InitializeDatabaseAsync(); // наполнение тестовыми данными
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.UseApiServices();
 
 app.Run();
