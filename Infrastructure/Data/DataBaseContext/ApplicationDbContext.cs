@@ -1,8 +1,3 @@
-using Application.Data.DataBaseContext;
-using Domain.Models;
-using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
-
 namespace Infrastructure.Data.DataBaseContext;
 
 // для подключения конкретной реализации БД через DI

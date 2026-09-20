@@ -1,4 +1,5 @@
 using Infrastructure.Data.DataBaseContext;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    await app.InitializeDatabaseAsync();
 }
 
 app.UseHttpsRedirection();
