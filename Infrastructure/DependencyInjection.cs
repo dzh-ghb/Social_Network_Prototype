@@ -14,6 +14,9 @@ public static class DependencyInjection
             options.UseSqlite(connectionString);
         });
 
+        // регистрация контекста БД по интерфейсу
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
         return services;
     }
 }
