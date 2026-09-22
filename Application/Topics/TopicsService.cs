@@ -13,13 +13,28 @@ public class TopicsService(IApplicationDbContext dbContext,
         throw new NotImplementedException();
     }
 
-    public async Task<List<Topic>> GetTopicsAsync()
+    public async Task<List<Topic>> GetTopicsAsync(CancellationToken ct)
     {
-        var topics = await dbContext.Topics
-            .AsNoTracking() // отключение отслеживания изменений (т.к. это операция чтения)
-            .ToListAsync();
+        try
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                ct.ThrowIfCancellationRequested();
+                await Task.Delay(1000, ct);
+                logger.LogInformation($">> {i} сек.");
+            }
 
-        return topics;
+            var topics = await dbContext.Topics
+                .AsNoTracking() // отключение отслеживания изменений (т.к. это операция чтения)
+                .ToListAsync(ct);
+
+            return topics;
+        }
+        catch (System.Exception)
+        {
+            logger.LogWarning(">> Запрос отменен");
+            return new List<Topic>();
+        }
     }
 
     public Task<Topic> GetTopicAsync(Guid id)
@@ -27,12 +42,12 @@ public class TopicsService(IApplicationDbContext dbContext,
         throw new NotImplementedException();
     }
 
-    public Task<Topic> UpdateTopicAsync(TopicId id, Topic topicRequestDto)
+    public Task<Topic> UpdateTopicAsync(Guid id, Topic topicRequestDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteTopicAsync(TopicId id)
+    public Task DeleteTopicAsync(Guid id)
     {
         throw new NotImplementedException();
     }
