@@ -1,6 +1,5 @@
-using Application.Data.DataBaseContext;
+using Domain.ModelsDto;
 using Domain.ValueObjects;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Topics;
 
@@ -8,12 +7,12 @@ namespace Application.Topics;
 public class TopicsService(IApplicationDbContext dbContext,
     ILogger<TopicsService> logger) : ITopicsService
 {
-    public Task<Topic> CreateTopicAsync(Topic topicRequestDto)
+    public Task<TopicResponseDto> CreateTopicAsync(CreateTopicRequestDto topicRequestDto)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<Topic>> GetTopicsAsync(CancellationToken ct)
+    public async Task<List<TopicResponseDto>> GetTopicsAsync(CancellationToken ct)
     {
         try
         {
@@ -24,25 +23,42 @@ public class TopicsService(IApplicationDbContext dbContext,
                 logger.LogInformation($">> {i} сек.");
             }
 
+
             var topics = await dbContext.Topics
                 .AsNoTracking() // отключение отслеживания изменений (т.к. это операция чтения)
                 .ToListAsync(ct);
 
-            return topics;
+            var topicsResponse = new List<TopicResponseDto>();
+
+            foreach (var topic in topics)
+            {
+                topicsResponse.Add(
+                    new TopicResponseDto(
+                        topic.Id.Value,
+                        topic.Title,
+                        topic.Summary,
+                        topic.TopicType,
+                        new LocationDto(topic.Location.City, topic.Location.Street),
+                        topic.EventStart
+                    )
+                );
+            }
+
+            return topicsResponse;
         }
         catch (System.Exception)
         {
             logger.LogWarning(">> Запрос отменен");
-            return new List<Topic>();
+            return new List<TopicResponseDto>();
         }
     }
 
-    public Task<Topic> GetTopicAsync(Guid id)
+    public Task<TopicResponseDto> GetTopicAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Topic> UpdateTopicAsync(Guid id, Topic topicRequestDto)
+    public Task<TopicResponseDto> UpdateTopicAsync(Guid id, UpdateTopicRequestDto topicRequestDto)
     {
         throw new NotImplementedException();
     }

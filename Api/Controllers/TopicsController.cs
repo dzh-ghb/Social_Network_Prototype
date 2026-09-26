@@ -1,6 +1,3 @@
-using Application.Topics;
-using Domain.Models;
-
 namespace API.Controllers
 {
     [Route("api/[controller]")]

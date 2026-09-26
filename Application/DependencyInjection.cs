@@ -1,6 +1,3 @@
-using Application.Topics;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Application;
 
 // методы расширения для регистрации сервиса TopicsService в DI
