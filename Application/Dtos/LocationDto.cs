@@ -1,4 +1,4 @@
-namespace Domain.ModelsDto;
+namespace Application.Dtos;
 
 // объект для передачи информации о локации
 public record LocationDto(

@@ -11,7 +11,7 @@ public static class InitialData
             DateTime.Parse("2038-01-15T10:00:00"),
             "Обзор ключевых технологических инноваций",
             "Конференция",
-            Location.Of("Кутузовский проспект, 36", "Тула")
+            Location.Of("Тула", "Кутузовский проспект, 36")
         ),
         Topic.Create(
             TopicId.Of(Guid.Parse("10000000-0000-0000-0000-000000000002")),
@@ -19,7 +19,7 @@ public static class InitialData
             DateTime.Parse("2027-02-20T14:30:00"),
             "Практическое применение AI-технологий",
             "Семинар",
-            Location.Of("Невский проспект, 100", "Санкт-Петербург")
+            Location.Of("Санкт-Петербург", "Невский проспект, 100")
         ),
         Topic.Create(
             TopicId.Of(Guid.Parse("10000000-0000-0000-0000-000000000003")),
@@ -27,7 +27,7 @@ public static class InitialData
             DateTime.Parse("2029-03-10T11:15:00"),
             "Стратегии защиты информационных систем",
             "Круглый стол",
-            Location.Of("Красная площадь, 1", "Тверь")
+            Location.Of("Тверь", "Красная площадь, 1")
         ),
         Topic.Create(
             TopicId.Of(Guid.Parse("10000000-0000-0000-0000-000000000004")),
@@ -35,7 +35,7 @@ public static class InitialData
             DateTime.Parse("2030-04-05T09:45:00"),
             "Экологические инновации в IT-секторе",
             "Конгресс",
-            Location.Of("Тверская улица, 13", "Белгород")
+            Location.Of("Белгород", "Тверская улица, 13")
         ),
         Topic.Create(
             TopicId.Of(Guid.Parse("10000000-0000-0000-0000-000000000005")),
@@ -43,7 +43,7 @@ public static class InitialData
             DateTime.Parse("2027-05-22T16:00:00"),
             "Опыт внедрения цифровых решений",
             "Форум",
-            Location.Of("Байкальская улица, 20", "Курск")
+            Location.Of("Курск", "Байкальская улица, 20")
         )
     };
 }

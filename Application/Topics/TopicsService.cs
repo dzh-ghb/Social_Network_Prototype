@@ -1,6 +1,3 @@
-using Domain.ModelsDto;
-using Domain.ValueObjects;
-
 namespace Application.Topics;
 
 // операции над топиками
@@ -23,28 +20,11 @@ public class TopicsService(IApplicationDbContext dbContext,
                 logger.LogInformation($">> {i} сек.");
             }
 
-
             var topics = await dbContext.Topics
                 .AsNoTracking() // отключение отслеживания изменений (т.к. это операция чтения)
                 .ToListAsync(ct);
 
-            var topicsResponse = new List<TopicResponseDto>();
-
-            foreach (var topic in topics)
-            {
-                topicsResponse.Add(
-                    new TopicResponseDto(
-                        topic.Id.Value,
-                        topic.Title,
-                        topic.Summary,
-                        topic.TopicType,
-                        new LocationDto(topic.Location.City, topic.Location.Street),
-                        topic.EventStart
-                    )
-                );
-            }
-
-            return topicsResponse;
+            return topics.ToTopicResponseDtoList();
         }
         catch (System.Exception)
         {

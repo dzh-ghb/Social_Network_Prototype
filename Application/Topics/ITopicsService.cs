@@ -1,5 +1,3 @@
-using Domain.ModelsDto;
-
 namespace Application.Topics;
 
 // операции над топиками

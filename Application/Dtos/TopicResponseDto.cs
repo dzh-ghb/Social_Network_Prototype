@@ -1,4 +1,4 @@
-namespace Domain.ModelsDto;
+namespace Application.Dtos;
 
 // объект для возврата информации о теме клиенту
 public record TopicResponseDto(
