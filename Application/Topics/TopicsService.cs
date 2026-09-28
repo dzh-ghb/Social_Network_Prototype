@@ -1,3 +1,6 @@
+using Application.Exceptions;
+using Domain.ValueObjects;
+
 namespace Application.Topics;
 
 // операции над топиками
@@ -33,9 +36,17 @@ public class TopicsService(IApplicationDbContext dbContext,
         }
     }
 
-    public Task<TopicResponseDto> GetTopicAsync(Guid id)
+    public async Task<TopicResponseDto> GetTopicAsync(Guid id)
     {
-        throw new NotImplementedException();
+        TopicId topicId = TopicId.Of(id);
+        var result = await dbContext.Topics.FindAsync([topicId]);
+
+        if (result is null)
+        {
+            throw new TopicNotFoundException(id);
+        }
+
+        return result.ToTopicResponseDto();
     }
 
     public Task<TopicResponseDto> UpdateTopicAsync(Guid id, UpdateTopicRequestDto topicRequestDto)
