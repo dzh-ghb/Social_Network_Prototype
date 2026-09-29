@@ -1,5 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddConfiguration(
+    builder.Configuration.GetSection("Logging")
+);
+
+builder.Logging.AddConsole();
+
 // Add services to the container.
 builder.Services
     .AddApiServices()

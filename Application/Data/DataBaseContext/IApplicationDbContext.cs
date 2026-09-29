@@ -4,4 +4,7 @@ namespace Application.Data.DataBaseContext;
 public interface IApplicationDbContext
 {
     DbSet<Topic> Topics { get; }
+
+    // обозначение наличие функционала сохранения данных (для абстракции)
+    Task<int> SaveChangesAsync(CancellationToken ct);
 }

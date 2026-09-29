@@ -6,6 +6,12 @@ namespace API.Controllers
     [ApiController]
     public class TopicsController(ITopicsService topicsService) : ControllerBase
     {
+        [HttpPost]
+        public async Task<ActionResult<TopicResponseDto>> CreateTopic(CreateTopicRequestDto dto)
+        {
+            return Ok(await topicsService.CreateTopicAsync(dto));
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<TopicResponseDto>>> GetTopics(CancellationToken ct)
         {
