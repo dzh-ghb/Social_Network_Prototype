@@ -51,6 +51,7 @@ public class TopicsService(IApplicationDbContext dbContext,
     public async Task<TopicResponseDto> GetTopicAsync(Guid id)
     {
         TopicId topicId = TopicId.Of(id);
+
         var result = await dbContext.Topics.FindAsync([topicId]);
 
         if (result is null)
@@ -61,13 +62,43 @@ public class TopicsService(IApplicationDbContext dbContext,
         return result.ToTopicResponseDto();
     }
 
-    public Task<TopicResponseDto> UpdateTopicAsync(Guid id, UpdateTopicRequestDto dto)
+    public async Task<TopicResponseDto> UpdateTopicAsync(Guid id, UpdateTopicRequestDto dto)
     {
-        throw new NotImplementedException();
+        TopicId topicId = TopicId.Of(id);
+
+        var topic = await dbContext.Topics.FindAsync([topicId]);
+
+        if (topic is null)
+        {
+            throw new TopicNotFoundException(id);
+        }
+
+        topic.Title = dto.Title ?? topic.Title;
+        topic.Summary = dto.Summary ?? topic.Summary;
+        topic.TopicType = dto.TopicType ?? topic.TopicType;
+        topic.Location = Location.Of(
+            dto.Location.City,
+            dto.Location.Street
+        ) ?? topic.Location;
+        topic.EventStart = dto.EventStart;
+
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+
+        return topic.ToTopicResponseDto();
     }
 
-    public Task DeleteTopicAsync(Guid id)
+    public async Task DeleteTopicAsync(Guid id)
     {
-        throw new NotImplementedException();
+        TopicId topicId = TopicId.Of(id);
+
+        var topic = await dbContext.Topics.FindAsync([topicId]);
+
+        if (topic is null)
+        {
+            throw new TopicNotFoundException(id);
+        }
+
+        dbContext.Topics.Remove(topic);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
     }
 }

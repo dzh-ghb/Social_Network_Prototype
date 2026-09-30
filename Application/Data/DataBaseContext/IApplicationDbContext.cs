@@ -5,6 +5,6 @@ public interface IApplicationDbContext
 {
     DbSet<Topic> Topics { get; }
 
-    // обозначение наличие функционала сохранения данных (для абстракции)
+    // обозначение наличия функционала сохранения данных (для абстракции)
     Task<int> SaveChangesAsync(CancellationToken ct);
 }
