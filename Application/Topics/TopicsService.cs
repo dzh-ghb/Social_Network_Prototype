@@ -37,6 +37,7 @@ public class TopicsService(IApplicationDbContext dbContext,
 
             var topics = await dbContext.Topics
                 .AsNoTracking() // отключение отслеживания изменений (т.к. это операция чтения)
+                .Where(t => !t.DeleteFlag)
                 .ToListAsync(ct);
 
             return topics.ToTopicResponseDtoList();
@@ -52,14 +53,14 @@ public class TopicsService(IApplicationDbContext dbContext,
     {
         TopicId topicId = TopicId.Of(id);
 
-        var result = await dbContext.Topics.FindAsync([topicId]);
+        var topic = await dbContext.Topics.FindAsync([topicId]);
 
-        if (result is null)
+        if (topic is null || topic.DeleteFlag)
         {
             throw new TopicNotFoundException(id);
         }
 
-        return result.ToTopicResponseDto();
+        return topic.ToTopicResponseDto();
     }
 
     public async Task<TopicResponseDto> UpdateTopicAsync(Guid id, UpdateTopicRequestDto dto)
@@ -68,7 +69,7 @@ public class TopicsService(IApplicationDbContext dbContext,
 
         var topic = await dbContext.Topics.FindAsync([topicId]);
 
-        if (topic is null)
+        if (topic is null || topic.DeleteFlag)
         {
             throw new TopicNotFoundException(id);
         }
@@ -93,12 +94,15 @@ public class TopicsService(IApplicationDbContext dbContext,
 
         var topic = await dbContext.Topics.FindAsync([topicId]);
 
-        if (topic is null)
+        if (topic is null || topic.DeleteFlag)
         {
             throw new TopicNotFoundException(id);
         }
 
-        dbContext.Topics.Remove(topic);
+        topic.DeleteFlag = true;
+        topic.DeletedAt = DateTimeOffset.UtcNow;
+        // dbContext.Topics.Remove(topic);
+
         await dbContext.SaveChangesAsync(CancellationToken.None);
     }
 }
