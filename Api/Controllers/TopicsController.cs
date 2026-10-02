@@ -1,5 +1,3 @@
-using Application.Dtos;
-
 namespace API.Controllers
 {
     [Route("api/[controller]")]

@@ -1,5 +1,3 @@
-using Api.Exceptions.Handler;
-
 namespace Api;
 
 // методы расширения для регистрации сервисов и элементов конвейера запросов
@@ -14,6 +12,18 @@ public static class DependencyInjection
         services.AddControllers();
         services.AddOpenApi();
 
+        // демо настройки CORS-политик для разрешения доступа к API (серверу) с определенных ресурсов
+        services.AddCors(options =>
+        {
+            options.AddPolicy("react-policy", policy =>
+            {
+                policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:3000");
+            });
+        });
+
         return services;
     }
 
@@ -21,6 +31,8 @@ public static class DependencyInjection
     public static WebApplication UseApiServices(
         this WebApplication app)
     {
+        app.UseCors("react-policy");
+
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();

@@ -4,6 +4,8 @@ global using Microsoft.Extensions.Logging;
 
 global using Application.Data.DataBaseContext;
 global using Application.Dtos;
+global using Application.Exceptions;
 global using Application.Extensions;
 global using Application.Topics;
 global using Domain.Models;
+global using Domain.ValueObjects;

@@ -1,6 +1,3 @@
-using Application.Exceptions;
-using Microsoft.AspNetCore.Diagnostics;
-
 namespace Api.Exceptions.Handler;
 
 // глобальный обработчик исключений из HTTP-контекста
