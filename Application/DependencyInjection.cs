@@ -6,7 +6,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         // регистрация сервиса по интерфейсу
-        services.AddScoped<ITopicsService, TopicsService>();
+        // services.AddScoped<ITopicsService, TopicsService>();
 
         return services;
     }

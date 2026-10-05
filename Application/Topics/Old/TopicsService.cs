@@ -1,6 +1,7 @@
-namespace Application.Topics;
+namespace Application.Topics.Old;
 
 // операции над топиками
+[Obsolete("Сервис устарел", true)]
 public class TopicsService(IApplicationDbContext dbContext,
     ILogger<TopicsService> logger) : ITopicsService
 {
