@@ -8,5 +8,6 @@ global using Application.Exceptions;
 global using Application.Extensions;
 global using Domain.Models;
 global using Domain.ValueObjects;
+global using Shared.CQRS;
 
-global using Application.Topics.Old;
+// global using Application.Topics.Old;

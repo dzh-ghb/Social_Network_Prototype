@@ -2,7 +2,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TopicsController/*(ITopicsService topicsService)*/ : ControllerBase
+    public class TopicsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
         public async Task<ActionResult<TopicResponseDto>> CreateTopic(CreateTopicRequestDto dto)
@@ -13,7 +13,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TopicResponseDto>>> GetTopics(CancellationToken ct)
         {
-            return Ok(null/*await topicsService.GetTopicsAsync(ct)*/);
+            return Ok(await mediator.Send(new GetTopicsQuery(), ct));
         }
 
         [HttpGet("{id}")]
