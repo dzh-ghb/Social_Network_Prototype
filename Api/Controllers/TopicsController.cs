@@ -11,9 +11,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TopicResponseDto>>> GetTopics(CancellationToken ct)
+        public async Task<IResult> GetTopics(CancellationToken ct)
         {
-            return Ok(await mediator.Send(new GetTopicsQuery(), ct));
+            return Results.Ok(await mediator.Send(new GetTopicsQuery(), ct));
         }
 
         [HttpGet("{id}")]
