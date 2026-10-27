@@ -17,9 +17,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TopicResponseDto>> GetTopic(Guid id)
+        public async Task<IResult> GetTopic(Guid id, CancellationToken ct)
         {
-            return Ok(null/*await topicsService.GetTopicAsync(id)*/);
+            return Results.Ok(await mediator.Send(new GetTopicQuery(id), ct));
         }
 
         [HttpPut("{id}")]
