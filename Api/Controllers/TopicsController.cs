@@ -5,9 +5,10 @@ namespace API.Controllers
     public class TopicsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<TopicResponseDto>> CreateTopic(CreateTopicRequestDto dto)
+        public async Task<IResult> CreateTopic(CreateTopicRequestDto dto, CancellationToken ct)
         {
-            return Ok(null/*await topicsService.CreateTopicAsync(dto)*/);
+            var response = await mediator.Send(new CreateTopicCommand(dto), ct);
+            return Results.Created($"/topics/{response.Topic.Id}", response.Topic);
         }
 
         [HttpGet]
