@@ -30,11 +30,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TopicResponseDto>> DeleteTopic(Guid id)
+        public async Task<IResult> DeleteTopic(Guid id, CancellationToken ct)
         {
-            // await topicsService.DeleteTopicAsync(id);
-            // return NoContent();
-            return Ok(null);
+            return Results.Ok(await mediator.Send(new DeleteTopicCommand(id), ct));
         }
     }
 }
