@@ -14,14 +14,8 @@ public class UpdateTopicHandler(IApplicationDbContext dbContext)
             throw new TopicNotFoundException(request.Id);
         }
 
-        topic.Title = request.TopicDto.Title ?? topic.Title;
-        topic.Summary = request.TopicDto.Summary ?? topic.Summary;
-        topic.TopicType = request.TopicDto.TopicType ?? topic.TopicType;
-        topic.Location = Location.Of(
-            request.TopicDto.Location.City,
-            request.TopicDto.Location.Street
-        ) ?? topic.Location;
-        topic.EventStart = request.TopicDto.EventStart;
+        topic.Update(request.TopicDto.Title, request.TopicDto.Summary, request.TopicDto.TopicType,
+                        request.TopicDto.Location.City, request.TopicDto.Location.Street, request.TopicDto.EventStart);
 
         await dbContext.SaveChangesAsync(CancellationToken.None);
 

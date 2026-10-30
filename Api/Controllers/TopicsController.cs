@@ -26,7 +26,8 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IResult> UpdateTopic(Guid id, [FromBody] UpdateTopicRequestDto dto, CancellationToken ct)
         {
-            return Results.Ok(await mediator.Send(new UpdateTopicCommand(id, dto), ct));
+            var response = await mediator.Send(new UpdateTopicCommand(id, dto), ct);
+            return Results.Ok(response.Topic);
         }
 
         [HttpDelete("{id}")]
