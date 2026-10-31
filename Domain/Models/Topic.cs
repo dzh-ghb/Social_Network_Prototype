@@ -27,17 +27,4 @@ public class Topic : Entity<TopicId>
 
         return topic;
     }
-
-    public void Update(string title, string summary, string topicType,
-                        string city, string street, DateTime eventStart)
-    {
-        this.Title = title ?? this.Title;
-        this.Summary = summary ?? this.Summary;
-        this.TopicType = topicType ?? this.TopicType;
-        this.Location = Location.Of(
-            city ?? this.Location.City,
-            street ?? this.Location.Street
-        );
-        this.EventStart = eventStart;
-    }
 }
