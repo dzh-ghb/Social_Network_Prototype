@@ -1,7 +1,10 @@
+using Domain.Security;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace Infrastructure.Data.DataBaseContext;
 
 // для подключения конкретной реализации БД через DI
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<CustomIdentityUser>, IApplicationDbContext
 {
     public DbSet<Topic> Topics => Set<Topic>();
 
