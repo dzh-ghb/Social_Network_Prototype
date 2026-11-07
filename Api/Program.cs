@@ -8,7 +8,7 @@ builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services
-    .AddApiServices()
+    .AddApiServices(builder.Configuration)
     .AddInfrastructureServices(builder.Configuration)
     .AddApplicationServices();
 

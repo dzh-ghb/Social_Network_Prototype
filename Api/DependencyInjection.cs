@@ -1,3 +1,5 @@
+using Api.Security.Extensions;
+
 namespace Api;
 
 // методы расширения для регистрации сервисов и элементов конвейера запросов
@@ -5,8 +7,8 @@ public static class DependencyInjection
 {
     // регистрация сервисов
     public static IServiceCollection AddApiServices(
-        this IServiceCollection services/*,
-        IConfiguration configuration*/)
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddExceptionHandler<CustomExceptionHandler>();
         services.AddControllers();
@@ -29,6 +31,8 @@ public static class DependencyInjection
         );
 
         services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+        services.AddIdentityServices(configuration);
 
         return services;
     }
