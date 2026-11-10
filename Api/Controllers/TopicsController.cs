@@ -1,39 +1,38 @@
-namespace API.Controllers
+namespace Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class TopicsController(IMediator mediator) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TopicsController(IMediator mediator) : ControllerBase
+    [HttpPost]
+    public async Task<IResult> CreateTopic(CreateTopicRequestDto dto, CancellationToken ct)
     {
-        [HttpPost]
-        public async Task<IResult> CreateTopic(CreateTopicRequestDto dto, CancellationToken ct)
-        {
-            var response = await mediator.Send(new CreateTopicCommand(dto), ct);
-            return Results.Created($"/topics/{response.Topic.Id}", response.Topic);
-        }
+        var response = await mediator.Send(new CreateTopicCommand(dto), ct);
+        return Results.Created($"/topics/{response.Topic.Id}", response.Topic);
+    }
 
-        [HttpGet]
-        public async Task<IResult> GetTopics(CancellationToken ct)
-        {
-            return Results.Ok(await mediator.Send(new GetTopicsQuery(), ct));
-        }
+    [HttpGet]
+    public async Task<IResult> GetTopics(CancellationToken ct)
+    {
+        return Results.Ok(await mediator.Send(new GetTopicsQuery(), ct));
+    }
 
-        [HttpGet("{id}")]
-        public async Task<IResult> GetTopic(Guid id, CancellationToken ct)
-        {
-            return Results.Ok(await mediator.Send(new GetTopicQuery(id), ct));
-        }
+    [HttpGet("{id}")]
+    public async Task<IResult> GetTopic(Guid id, CancellationToken ct)
+    {
+        return Results.Ok(await mediator.Send(new GetTopicQuery(id), ct));
+    }
 
-        [HttpPut("{id}")]
-        public async Task<IResult> UpdateTopic(Guid id, [FromBody] UpdateTopicRequestDto dto, CancellationToken ct)
-        {
-            var response = await mediator.Send(new UpdateTopicCommand(id, dto), ct);
-            return Results.Ok(response.Topic);
-        }
+    [HttpPut("{id}")]
+    public async Task<IResult> UpdateTopic(Guid id, [FromBody] UpdateTopicRequestDto dto, CancellationToken ct)
+    {
+        var response = await mediator.Send(new UpdateTopicCommand(id, dto), ct);
+        return Results.Ok(response.Topic);
+    }
 
-        [HttpDelete("{id}")]
-        public async Task<IResult> DeleteTopic(Guid id, CancellationToken ct)
-        {
-            return Results.Ok(await mediator.Send(new DeleteTopicCommand(id), ct));
-        }
+    [HttpDelete("{id}")]
+    public async Task<IResult> DeleteTopic(Guid id, CancellationToken ct)
+    {
+        return Results.Ok(await mediator.Send(new DeleteTopicCommand(id), ct));
     }
 }
