@@ -1,5 +1,3 @@
-using Api.Security.Extensions;
-
 namespace Api;
 
 // методы расширения для регистрации сервисов и элементов конвейера запросов
@@ -50,6 +48,7 @@ public static class DependencyInjection
 
         app.UseExceptionHandler(options => { });
         app.UseHttpsRedirection();
+        app.UseAuthentication(); // middleware для определения личности юзера, установления значений HTTP-контекста, проверки учетных данных
         app.UseAuthorization();
         app.MapControllers();
 

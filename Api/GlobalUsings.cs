@@ -1,10 +1,20 @@
 global using Application.Mapping;
 global using MediatR;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Diagnostics;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.Data;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.IdentityModel.JsonWebTokens;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Security.Claims;
+global using System.Text;
 
 global using Api;
 global using Api.Exceptions.Handler;
+global using Api.Security.Extensions;
+global using Api.Security.Services;
 global using Application;
 global using Application.Dtos;
 global using Application.Exceptions;
@@ -13,7 +23,10 @@ global using Application.Topics.Commands.DeleteTopic;
 global using Application.Topics.Commands.UpdateTopic;
 global using Application.Topics.Queries.GetTopic;
 global using Application.Topics.Queries.GetTopics;
+global using Domain.Security;
+global using Domain.Security.Dtos;
 global using Infrastructure;
+global using Infrastructure.Data.DataBaseContext;
 global using Infrastructure.Data.Extensions;
 
 // global using Application.Topics.Old;
