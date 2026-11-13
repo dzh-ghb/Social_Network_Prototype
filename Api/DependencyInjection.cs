@@ -9,7 +9,13 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddExceptionHandler<CustomExceptionHandler>();
-        services.AddControllers();
+        services.AddControllers(options =>
+        {
+            var policy = new AuthorizationPolicyBuilder() // политика обязательной аутентификации юзеров
+                .RequireAuthenticatedUser()
+                .Build();
+            options.Filters.Add(new AuthorizeFilter(policy));
+        });
         services.AddOpenApi();
 
         // демо настройки CORS-политик для разрешения доступа к API (серверу) с определенных ресурсов
